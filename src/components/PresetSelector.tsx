@@ -49,8 +49,7 @@ export default function PresetSelector({ recipe, onChange }: Props) {
               onClick={() => onChange({ preset: preset.id })}
               title={`${preset.label} — ${preset.width}×${preset.height} — ${getOrientationLabel(preset.width, preset.height)}`}
               className={cn(
-                "flex items-center gap-2.5 p-2.5 rounded-lg border text-left transition-all duration-150 cursor-pointer",
-                "hover:scale-[1.02] active:scale-[0.98]",
+                "min-h-[44px] min-w-[44px] flex items-center gap-2.5 p-3 rounded-lg border text-left transition-all duration-150 cursor-pointer hover:scale-[1.02] active:scale-[0.98]",
                 active
                   ? "border-film-500 bg-film-50"
                   : "border-[var(--border)] bg-[var(--surface)] hover:border-film-300 hover:bg-film-50/30"
@@ -77,8 +76,7 @@ export default function PresetSelector({ recipe, onChange }: Props) {
           title="Custom — Set your own dimensions"
           onClick={() => onChange({ preset: "custom" })}
           className={cn(
-            "flex items-center gap-2.5 p-2.5 rounded-lg border text-left transition-all duration-150",
-            "hover:scale-[1.02] active:scale-[0.98]",
+            "min-h-[44px] min-w-[44px] flex items-center gap-2.5 p-3 rounded-lg border text-left transition-all duration-150 cursor-pointer hover:scale-[1.02] active:scale-[0.98]",
             recipe.preset === "custom"
               ? "border-film-500 bg-film-50"
               : "border-[var(--border)] bg-[var(--surface)] hover:border-film-300 hover:bg-film-50/30"
@@ -106,10 +104,11 @@ export default function PresetSelector({ recipe, onChange }: Props) {
       {recipe.preset === "custom" && (
         <div className="flex gap-3 items-center p-3 bg-[var(--surface)] rounded-lg border border-[var(--border)] animate-fade-in">
           <div className="flex-1">
-            <label className="text-[10px] font-heading font-semibold uppercase tracking-wider text-[var(--muted)] block mb-1.5">
+            <label htmlFor="custom-width" className="text-[10px] font-heading font-semibold uppercase tracking-wider text-[var(--muted)] block mb-1.5">
               Width px
             </label>
             <input
+              id="custom-width"
               type="number"
               min={16}
               max={7680}
@@ -121,10 +120,11 @@ export default function PresetSelector({ recipe, onChange }: Props) {
           </div>
           <span className="text-[var(--muted)] mt-5 font-heading text-sm">x</span>
           <div className="flex-1">
-            <label className="text-[10px] font-heading font-semibold uppercase tracking-wider text-[var(--muted)] block mb-1.5">
+            <label htmlFor="custom-height" className="text-[10px] font-heading font-semibold uppercase tracking-wider text-[var(--muted)] block mb-1.5">
               Height px
             </label>
             <input
+              id="custom-height"
               type="number"
               min={16}
               max={7680}

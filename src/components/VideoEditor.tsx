@@ -62,6 +62,9 @@ export default function VideoEditor() {
     handleFileSelect,
     handleExport,
     reset,
+    file, duration, recipe, status, progress,
+    result, error, updateRecipe,
+    handleFileSelect, handleExport, cancelExport, reset,
   } = useVideoEditor();
 
   const isProcessing = status === "loading-engine" || status === "exporting";
@@ -80,6 +83,8 @@ export default function VideoEditor() {
             : null
         }
       />
+    <div className="min-h-screen relative flex flex-col" style={{ background: "var(--bg)" }}>
+      <ExportOverlay status={status} progress={progress} onCancel={cancelExport} />
 
       <div className="max-w-6xl mx-auto px-4 py-8 pb-6 flex-1 w-full">
         <header className="mb-10 flex items-end justify-between animate-fade-in">
@@ -93,7 +98,7 @@ export default function VideoEditor() {
           </div>
           <div className="hidden sm:flex items-center gap-2 text-[10px] font-heading font-semibold uppercase tracking-widest text-[var(--muted)] pb-1">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block animate-pulse" />
-            No login. No ads. 100% local.
+            No login. No ads. 100% private — your video never leaves your device.
           </div>
         </header>
 
@@ -101,6 +106,14 @@ export default function VideoEditor() {
           <div className="space-y-4">
             <div className="bg-[var(--surface)] rounded-xl p-5 border border-[var(--border)] animate-fade-in">
               <FileUpload onFileSelect={handleFileSelect} currentFile={file} />
+
+              {!file && (
+              <div className="text-center text-gray-500 py-6">
+                <p>Upload a video to get started</p>
+                <p className="text-sm">Supports MP4, MOV, WebM and more</p>
+              </div>
+              )}
+
               {file && (
                 <div className="mt-4 animate-fade-in">
                   <VideoPreview file={file} />
@@ -170,6 +183,7 @@ export default function VideoEditor() {
                   <p className="font-heading font-bold text-sm">
                     Export failed
                   </p>
+                  <p className="font-heading font-bold text-sm">Error</p>
                   <p className="text-film-600 text-xs mt-1">{error}</p>
                 </div>
               </div>
@@ -228,11 +242,14 @@ export default function VideoEditor() {
           <p className="text-[11px] font-heading text-[var(--muted)] tracking-wide">
             2026 Reframe. Free, open source, no login required.
           </p>
+<p className="text-[10px] text-[var(--muted)]">
+  All video processing happens locally in your browser using FFmpeg.wasm.
+</p>
           <a
             href="https://github.com/magic-peach/reframe"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-[11px] font-heading font-medium text-[var(--muted)] hover:text-film-600 transition-colors"
+            className="min-h-[44px] min-w-[44px] flex items-center gap-1.5 px-2 text-[11px] font-heading font-medium text-[var(--muted)] hover:text-film-600 transition-colors"
           >
             <Github size={13} />
             Source on GitHub
