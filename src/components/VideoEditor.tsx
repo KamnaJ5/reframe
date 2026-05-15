@@ -13,8 +13,15 @@ import ExportOverlay from "./ExportOverlay";
 import DownloadResult from "./DownloadResult";
 import { cn } from "@/lib/utils";
 import {
-  Layers, Crop, Scissors, RotateCw, Volume2,
-  SlidersHorizontal, Zap, AlertTriangle, Github
+  Layers,
+  Crop,
+  Scissors,
+  RotateCw,
+  Volume2,
+  SlidersHorizontal,
+  Zap,
+  AlertTriangle,
+  Github,
 } from "lucide-react";
 
 interface SectionProps {
@@ -44,23 +51,37 @@ function Section({ icon, title, children, delay = 0 }: SectionProps) {
 
 export default function VideoEditor() {
   const {
-    file, duration, recipe, status, progress,
-    result, error, updateRecipe,
-    handleFileSelect, handleExport, reset,
+    file,
+    duration,
+    recipe,
+    status,
+    progress,
+    result,
+    error,
+    updateRecipe,
+    handleFileSelect,
+    handleExport,
+    reset,
   } = useVideoEditor();
 
   const isProcessing = status === "loading-engine" || status === "exporting";
 
   return (
-    <div className="min-h-screen relative flex flex-col" style={{ background: "var(--bg)" }}>
-     <ExportOverlay
-  status={status}
-  progress={progress}
-  estimatedTime={Math.max(1, Math.ceil((100 - progress) / 2))}
-/>
+    <div
+      className="min-h-screen relative flex flex-col"
+      style={{ background: "var(--bg)" }}
+    >
+      <ExportOverlay
+        status={status}
+        progress={progress}
+        estimatedTime={
+          progress > 0
+            ? Math.round(((Date.now() / progress) * (100 - progress)) / 1000)
+            : null
+        }
+      />
 
       <div className="max-w-6xl mx-auto px-4 py-8 pb-6 flex-1 w-full">
-
         <header className="mb-10 flex items-end justify-between animate-fade-in">
           <div>
             <h1 className="font-display text-6xl leading-none tracking-widest2 text-[var(--text)]">
@@ -77,7 +98,6 @@ export default function VideoEditor() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-5">
-
           <div className="space-y-4">
             <div className="bg-[var(--surface)] rounded-xl p-5 border border-[var(--border)] animate-fade-in">
               <FileUpload onFileSelect={handleFileSelect} currentFile={file} />
@@ -89,23 +109,48 @@ export default function VideoEditor() {
             </div>
 
             {file && (
-              <div className={cn(
-                "grid grid-cols-1 sm:grid-cols-2 gap-4",
-                isProcessing && "pointer-events-none opacity-50"
-              )}>
+              <div
+                className={cn(
+                  "grid grid-cols-1 sm:grid-cols-2 gap-4",
+                  isProcessing && "pointer-events-none opacity-50",
+                )}
+              >
                 <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] p-5 space-y-6">
-                  <Section icon={<Scissors size={12} />} title="Trim" delay={50}>
-                    <TrimControl recipe={recipe} onChange={updateRecipe} duration={duration} />
+                  <Section
+                    icon={<Scissors size={12} />}
+                    title="Trim"
+                    delay={50}
+                  >
+                    <TrimControl
+                      recipe={recipe}
+                      onChange={updateRecipe}
+                      duration={duration}
+                    />
                   </Section>
-                  <Section icon={<RotateCw size={12} />} title="Rotate" delay={100}>
+                  <Section
+                    icon={<RotateCw size={12} />}
+                    title="Rotate"
+                    delay={100}
+                  >
                     <RotateControl recipe={recipe} onChange={updateRecipe} />
                   </Section>
                 </div>
                 <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] p-5 space-y-6">
-                  <Section icon={<Volume2 size={12} />} title="Audio & Speed" delay={150}>
-                    <AudioSpeedControl recipe={recipe} onChange={updateRecipe} />
+                  <Section
+                    icon={<Volume2 size={12} />}
+                    title="Audio & Speed"
+                    delay={150}
+                  >
+                    <AudioSpeedControl
+                      recipe={recipe}
+                      onChange={updateRecipe}
+                    />
                   </Section>
-                  <Section icon={<SlidersHorizontal size={12} />} title="Export quality" delay={200}>
+                  <Section
+                    icon={<SlidersHorizontal size={12} />}
+                    title="Export quality"
+                    delay={200}
+                  >
                     <ExportSettings recipe={recipe} onChange={updateRecipe} />
                   </Section>
                 </div>
@@ -113,13 +158,18 @@ export default function VideoEditor() {
             )}
 
             {status === "error" && error && (
-                 <div
-                    role="status"
-                    className="flex items-start gap-3 p-4 bg-film-50 border border-film-200 rounded-xl text-film-800 text-sm animate-fade-in"
-                  >
-                <AlertTriangle size={16} className="shrink-0 mt-0.5 text-film-500" />
+              <div
+                role="status"
+                className="flex items-start gap-3 p-4 bg-film-50 border border-film-200 rounded-xl text-film-800 text-sm animate-fade-in"
+              >
+                <AlertTriangle
+                  size={16}
+                  className="shrink-0 mt-0.5 text-film-500"
+                />
                 <div>
-                  <p className="font-heading font-bold text-sm">Export failed</p>
+                  <p className="font-heading font-bold text-sm">
+                    Export failed
+                  </p>
                   <p className="text-film-600 text-xs mt-1">{error}</p>
                 </div>
               </div>
@@ -132,11 +182,16 @@ export default function VideoEditor() {
             )}
           </div>
 
-          <div className={cn(
-            "space-y-5",
-            isProcessing && "pointer-events-none opacity-50"
-          )}>
-            <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] p-5 space-y-6 animate-fade-in" style={{ animationDelay: "50ms" }}>
+          <div
+            className={cn(
+              "space-y-5",
+              isProcessing && "pointer-events-none opacity-50",
+            )}
+          >
+            <div
+              className="bg-[var(--surface)] rounded-xl border border-[var(--border)] p-5 space-y-6 animate-fade-in"
+              style={{ animationDelay: "50ms" }}
+            >
               <Section icon={<Layers size={12} />} title="Output size">
                 <PresetSelector recipe={recipe} onChange={updateRecipe} />
               </Section>
@@ -155,10 +210,13 @@ export default function VideoEditor() {
                 "font-display text-2xl tracking-widest transition-all duration-200",
                 file && !isProcessing
                   ? "bg-film-600 hover:bg-film-700 hover:scale-[1.01] text-white shadow-lg shadow-film-200 active:scale-[0.98] cursor-pointer"
-                  : "bg-[var(--border)] text-[var(--muted)] cursor-not-allowed"
+                  : "bg-[var(--border)] text-[var(--muted)] cursor-not-allowed",
               )}
             >
-              <Zap size={20} className={cn(file && !isProcessing && "animate-pulse")} />
+              <Zap
+                size={20}
+                className={cn(file && !isProcessing && "animate-pulse")}
+              />
               {isProcessing ? "PROCESSING" : "EXPORT"}
             </button>
           </div>
