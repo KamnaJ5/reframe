@@ -7,9 +7,10 @@ import spinnerAnim from "@/lib/lottie/spinner.json";
 interface Props {
   status: ExportStatus;
   progress: number;
+  estimatedTime?: number;
 }
 
-export default function ExportOverlay({ status, progress }: Props) {
+export default function ExportOverlay({ status, progress, estimatedTime }: Props){
   const visible = status === "loading-engine" || status === "exporting";
   if (!visible) return null;
 
@@ -32,6 +33,12 @@ export default function ExportOverlay({ status, progress }: Props) {
               ? "Setting up the video engine. This only happens once."
               : "Processing your video locally."}
           </p>
+
+{status === "exporting" && estimatedTime && (
+  <p className="text-sm text-[var(--muted)] mt-2">
+    About {estimatedTime}s remaining
+  </p>
+)}
           <p className="text-xs font-heading font-semibold text-film-600 mt-2 uppercase tracking-wide">
             Do not close or refresh this tab
           </p>

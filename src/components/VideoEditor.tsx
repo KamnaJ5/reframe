@@ -53,7 +53,11 @@ export default function VideoEditor() {
 
   return (
     <div className="min-h-screen relative flex flex-col" style={{ background: "var(--bg)" }}>
-      <ExportOverlay status={status} progress={progress} />
+     <ExportOverlay
+  status={status}
+  progress={progress}
+  estimatedTime={Math.max(1, Math.ceil((100 - progress) / 2))}
+/>
 
       <div className="max-w-6xl mx-auto px-4 py-8 pb-6 flex-1 w-full">
 
