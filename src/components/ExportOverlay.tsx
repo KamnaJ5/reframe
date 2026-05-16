@@ -14,7 +14,7 @@ interface Props {
 }
 
 
-export default function ExportOverlay({ status, progress, estimatedTime }: Props) {
+export default function ExportOverlay({ status, progress, estimatedTime, onCancel }: Props) {
   const visible = status === "loading-engine" || status === "exporting";
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const focusAnchorRef = useRef<HTMLDivElement | null>(null);
@@ -23,7 +23,7 @@ export default function ExportOverlay({ status, progress, estimatedTime }: Props
     if (e.key === "Escape") {
       onCancel?.();
     }
-  }, []);
+  }, [onCancel]);
 
   useEffect(() => {
     if (visible) {
@@ -56,6 +56,7 @@ export default function ExportOverlay({ status, progress, estimatedTime }: Props
   const isLoading = status === "loading-engine";
 
   return (
+    <FocusTrap>
       <div
         role="dialog"
         aria-modal="true"
@@ -154,5 +155,6 @@ export default function ExportOverlay({ status, progress, estimatedTime }: Props
           )}
         </div>
       </div>
+      </FocusTrap>
   );
 }
