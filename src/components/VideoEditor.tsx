@@ -239,7 +239,6 @@ export default function VideoEditor() {
   </div>
 </Section>
                     <AudioSpeedControl recipe={recipe} onChange={updateRecipe} />
-                  </Section>
                   <Section icon={<SlidersHorizontal size={12} />} title="Output format" delay={190}>
                     <FormatSelector recipe={recipe} onChange={updateRecipe} />
                   </Section>
