@@ -1,6 +1,5 @@
 "use client";
 
-import FocusTrap from "focus-trap-react";
 import { useEffect, useRef } from "react";
 import { ExportStatus } from "@/lib/types";
 import LottiePlayer from "./LottiePlayer";
@@ -36,31 +35,11 @@ export default function ExportOverlay({ status, progress, estimatedTime }: Props
   useEffect(() => {
     if (!visible) return;
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onCancel();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [visible, onCancel]);
+ }, [visible]);
 
   if (!visible) return null;
 
   return (
-    <FocusTrap
-      active={visible}
-      focusTrapOptions={{
-        escapeDeactivates: true,
-        clickOutsideDeactivates: false,
-        initialFocus: () => focusAnchorRef.current!,
-        fallbackFocus: () => focusAnchorRef.current!,
-      }}
-    >
       <div
         role="dialog"
         aria-modal="true"
@@ -158,6 +137,5 @@ export default function ExportOverlay({ status, progress, estimatedTime }: Props
           )}
         </div>
       </div>
-    </FocusTrap>
   );
 }
