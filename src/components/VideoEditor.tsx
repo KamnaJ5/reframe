@@ -280,7 +280,7 @@ export default function VideoEditor() {
                   </button>
                 )}
               </div>
-            )}
+          
 
             {status === "done" && result && (
               <div role="status" className="animate-fade-in">
