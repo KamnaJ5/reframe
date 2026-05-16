@@ -1,5 +1,5 @@
 "use client";
-
+import { useState } from "react";
 import { useVideoEditor } from "@/hooks/useVideoEditor";
 import FileUpload from "./FileUpload";
 import VideoPreview from "./VideoPreview";
@@ -53,6 +53,7 @@ export default function VideoEditor() {
     result, error, updateRecipe,
     handleFileSelect, handleExport, cancelExport, reset, resetSettings,
   } = useVideoEditor();
+  const [copied, setCopied] = useState(false);
 
   const isProcessing = status === "loading-engine" || status === "exporting";
 
@@ -67,7 +68,7 @@ export default function VideoEditor() {
           </div>
           <div className="hidden sm:flex items-center gap-2 text-[10px] font-heading font-semibold uppercase tracking-widest text-[var(--muted)] pb-1">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block animate-pulse" />
-            No login. No ads. 100% private — your video never leaves your device.
+            No login. No ads. 100% private ï¿½ your video never leaves your device.
           </div>
         </header>
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-5">
@@ -87,7 +88,7 @@ export default function VideoEditor() {
               )}
             </div>
             {file && file.size > 100 * 1024 * 1024 && (
-              <p className="text-yellow-400 text-sm">Large file — processing may take several minutes</p>
+              <p className="text-yellow-400 text-sm">Large file ï¿½ processing may take several minutes</p>
             )}
             {file && (
               <div className={cn("grid grid-cols-1 sm:grid-cols-2 gap-4", isProcessing && "pointer-events-none opacity-50")}>
@@ -143,6 +144,18 @@ export default function VideoEditor() {
                   <p className="font-heading font-bold text-sm">Export failed</p>
                   <p className="text-film-600 text-xs mt-1">{error}</p>
                 </div>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(error).then(() => {
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 2000);
+                    });
+                  }}
+                  className="px-3 py-1.5 bg-[var(--border)] border border-[var(--border)] rounded-lg text-xs font-semibold hover:opacity-80 transition-colors shrink-0 whitespace-nowrap"
+                  aria-label="Copy error message to clipboard"
+                >
+                  {copied ? "Copied!" : "Copy error"}
+                </button>
                 {!error.includes("Validation Failed") && (
                   <button onClick={handleExport} className="px-3 py-1.5 bg-red-200 border border-film-200 rounded-lg text-xs font-semibold hover:bg-film-50 hover:border-film-300 transition-colors shrink-0 whitespace-nowrap">
                     Retry Export
