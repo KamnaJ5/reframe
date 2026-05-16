@@ -249,8 +249,7 @@ export default function VideoEditor() {
           </p>
           <p className="text-[10px] text-[var(--muted)]">
             All video processing happens locally in your browser using FFmpeg.wasm.
-          </p>
-          
+          </p>            
             href="https://github.com/magic-peach/reframe"
             target="_blank"
             rel="noopener noreferrer"
@@ -264,4 +263,5 @@ export default function VideoEditor() {
     </div>
   );
 }
+
 
