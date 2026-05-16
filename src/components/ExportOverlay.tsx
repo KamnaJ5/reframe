@@ -23,7 +23,7 @@ export default function ExportOverlay({ status, progress, estimatedTime }: Props
     if (e.key === "Escape") {
       onCancel?.();
     }
-  }, [onCancel]);
+  }, []);
 
   useEffect(() => {
     if (visible) {
