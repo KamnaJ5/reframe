@@ -249,38 +249,32 @@ export default function VideoEditor() {
               </div>
             )}
 
-            {status === "error" && error && (
-              <div
-                role="status"
-                className="flex items-start gap-3 p-4 bg-film-50 border border-film-200 rounded-xl text-film-800 text-sm animate-fade-in"
-              >
-                <AlertTriangle
-                  size={16}
-                  className="shrink-0 mt-0.5 text-film-500"
-                />
-                <div>
-                  <p className="font-heading font-bold text-sm">
-                    Export failed
-                  </p>
-                 <div
-                    role="status"
-                    className="flex items-start gap-3 p-4 bg-film-50 border border-film-200 rounded-xl text-film-800 text-sm animate-fade-in"
-                  >
-                <AlertTriangle size={16} className="shrink-0 mt-0.5 text-film-500" />
-                <div className="flex-1">
-                  <p className="font-heading font-bold text-sm">Error</p>
-                  <p className="text-film-600 text-xs mt-1">{error}</p>
-                </div>
-                {!error.includes("Validation Failed") && (
-                  <button
-                    onClick={handleExport}
-                    className="px-3 py-1.5 bg-red-200 border border-film-200 rounded-lg text-xs font-semibold hover:bg-film-50 hover:border-film-300 transition-colors shrink-0 whitespace-nowrap"
-                  >
-                    Retry Export
-                  </button>
-                )}
-              </div>
-          
+           {status === "error" && error && (
+  <div
+    role="status"
+    className="flex items-start gap-3 p-4 bg-film-50 border border-film-200 rounded-xl text-film-800 text-sm animate-fade-in"
+  >
+    <AlertTriangle size={16} className="shrink-0 mt-0.5 text-film-500" />
+    <div className="flex-1">
+      <p className="font-heading font-bold text-sm">Export failed</p>
+      <p className="text-film-600 text-xs mt-1">{error}</p>
+    </div>
+    {!error.includes("Validation Failed") && (
+      <button
+        onClick={handleExport}
+        className="px-3 py-1.5 bg-red-200 border border-film-200 rounded-lg text-xs font-semibold hover:bg-film-50 hover:border-film-300 transition-colors shrink-0 whitespace-nowrap"
+      >
+        Retry Export
+      </button>
+    )}
+  </div>
+)}
+
+{status === "done" && result && (
+  <div role="status" className="animate-fade-in">
+    <DownloadResult result={result} onReset={reset} />
+  </div>
+)}
 
             {status === "done" && result && (
               <div role="status" className="animate-fade-in">
@@ -340,7 +334,7 @@ export default function VideoEditor() {
             </button>
           </div>
         </div>
-      </div> )
+      </div>
 
       <footer className="w-full border-t border-[var(--border)] py-6 mt-auto">
         <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
