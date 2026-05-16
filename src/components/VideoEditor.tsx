@@ -141,12 +141,19 @@ export default function VideoEditor() {
                       recipe={recipe}
                       onChange={updateRecipe}
                     />
-                  <Section icon={<Volume2 size={12} />} title="Audio & Speed" delay={150}>
+                  </Section>
                   <Section
   icon={<SlidersHorizontal size={12} />}
   title="Adjustments"
   delay={175}
 >
+<Section icon={<SlidersHorizontal size={12} />} title="Output format" delay={190}>
+  <FormatSelector recipe={recipe} onChange={updateRecipe} />
+</Section>
+
+<Section icon={<SlidersHorizontal size={12} />} title="Export quality" delay={200}>
+  <ExportSettings recipe={recipe} onChange={updateRecipe} />
+</Section>
   <div className="space-y-5">
 
     {/* Brightness */}
@@ -237,13 +244,6 @@ export default function VideoEditor() {
     </div>
 
   </div>
-                    <AudioSpeedControl recipe={recipe} onChange={updateRecipe} />
-                  <Section icon={<SlidersHorizontal size={12} />} title="Output format" delay={190}>
-                    <FormatSelector recipe={recipe} onChange={updateRecipe} />
-                  </Section>
-                  <Section icon={<SlidersHorizontal size={12} />} title="Export quality" delay={200}>
-                    <ExportSettings recipe={recipe} onChange={updateRecipe} />
-                  </Section>
                 </div>
               </div>
             )}
