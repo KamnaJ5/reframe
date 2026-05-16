@@ -75,14 +75,10 @@ export default function VideoEditor() {
       style={{ background: "var(--bg)" }}
     >
       <ExportOverlay
-        status={status}
-        progress={progress}
-        estimatedTime={
-          progress > 0
-            ? Math.round(((Date.now() / progress) * (100 - progress)) / 1000)
-            : null
-        }
-      />
+  status={status}
+  progress={progress}
+  onCancel={cancelExport}
+/>
     <div className="min-h-screen relative flex flex-col" style={{ background: "var(--bg)" }}>
       <ExportOverlay status={status} progress={progress} onCancel={cancelExport} />
 
