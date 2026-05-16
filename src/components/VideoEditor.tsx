@@ -1,4 +1,4 @@
-ï»¿"use client";
+"use client";
 
 import { useVideoEditor } from "@/hooks/useVideoEditor";
 import FileUpload from "./FileUpload";
@@ -67,7 +67,7 @@ export default function VideoEditor() {
           </div>
           <div className="hidden sm:flex items-center gap-2 text-[10px] font-heading font-semibold uppercase tracking-widest text-[var(--muted)] pb-1">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block animate-pulse" />
-            No login. No ads. 100% private â€” your video never leaves your device.
+            No login. No ads. 100% private — your video never leaves your device.
           </div>
         </header>
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-5">
@@ -87,7 +87,7 @@ export default function VideoEditor() {
               )}
             </div>
             {file && file.size > 100 * 1024 * 1024 && (
-              <p className="text-yellow-400 text-sm">Large file â€” processing may take several minutes</p>
+              <p className="text-yellow-400 text-sm">Large file — processing may take several minutes</p>
             )}
             {file && (
               <div className={cn("grid grid-cols-1 sm:grid-cols-2 gap-4", isProcessing && "pointer-events-none opacity-50")}>
@@ -103,8 +103,7 @@ export default function VideoEditor() {
                   <Section icon={<Volume2 size={12} />} title="Audio & Speed" delay={150}>
                     <AudioSpeedControl recipe={recipe} onChange={updateRecipe} />
                   </Section>
-                  <Section icon={<SlidersHorizontal size={12} />} title="Adjustments" delay={175}>
-                  </Section>
+                  
                   <Section icon={<SlidersHorizontal size={12} />} title="Output format" delay={190}>
                     <FormatSelector recipe={recipe} onChange={updateRecipe} />
                   </Section>
@@ -204,3 +203,4 @@ export default function VideoEditor() {
     </div>
   );
 }
+
