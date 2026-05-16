@@ -8,6 +8,7 @@ import FramingControl from "./FramingControl";
 import TrimControl from "./TrimControl";
 import RotateControl from "./RotateControl";
 import AudioSpeedControl from "./AudioSpeedControl";
+import FormatSelector from "./FormatSelector";
 import ExportSettings from "./ExportSettings";
 import ExportOverlay from "./ExportOverlay";
 import DownloadResult from "./DownloadResult";
@@ -51,18 +52,9 @@ function Section({ icon, title, children, delay = 0 }: SectionProps) {
 
 export default function VideoEditor() {
   const {
-    file,
-    duration,
-    recipe,
-    status,
-    progress,
-    result,
-    error,
-    updateRecipe,
-    handleFileSelect,
-    handleExport,
-    cancelExport,
-    reset,
+    file, duration, recipe, status, progress,
+    result, error, updateRecipe,
+    handleFileSelect, handleExport, cancelExport, reset, resetSettings,
   } = useVideoEditor();
 
   
@@ -248,11 +240,10 @@ export default function VideoEditor() {
 </Section>
                     <AudioSpeedControl recipe={recipe} onChange={updateRecipe} />
                   </Section>
-                  <Section
-                    icon={<SlidersHorizontal size={12} />}
-                    title="Export quality"
-                    delay={200}
-                  >
+                  <Section icon={<SlidersHorizontal size={12} />} title="Output format" delay={190}>
+                    <FormatSelector recipe={recipe} onChange={updateRecipe} />
+                  </Section>
+                  <Section icon={<SlidersHorizontal size={12} />} title="Export quality" delay={200}>
                     <ExportSettings recipe={recipe} onChange={updateRecipe} />
                   </Section>
                 </div>
@@ -316,18 +307,30 @@ export default function VideoEditor() {
               <Section icon={<Crop size={12} />} title="Framing" delay={100}>
                 <FramingControl recipe={recipe} onChange={updateRecipe} />
               </Section>
+
+              <div className="pt-2 flex justify-end">
+                <button
+                  type="button"
+                  onClick={resetSettings}
+                  className="text-[9px] font-heading font-bold uppercase tracking-widest text-[var(--muted)] hover:text-film-600 transition-all opacity-60 hover:opacity-100"
+                >
+                  Reset all settings
+                </button>
+              </div>
             </div>
 
             <button
               type="button"
               onClick={handleExport}
               disabled={!file || isProcessing}
+              aria-label='Export video'
+              aria-disabled={!file || isProcessing ? "true" : undefined}
               className={cn(
                 "w-full flex items-center justify-center gap-3 py-5 rounded-xl",
                 "font-display text-2xl tracking-widest transition-all duration-200",
                 file && !isProcessing
                   ? "bg-film-600 hover:bg-film-700 hover:scale-[1.01] text-white shadow-lg shadow-film-200 active:scale-[0.98] cursor-pointer"
-                  : "bg-[var(--border)] text-[var(--muted)] cursor-not-allowed",
+                  : "bg-[var(--border)] text-[var(--muted)] opacity-40 cursor-not-allowed"
               )}
             >
               <Zap
