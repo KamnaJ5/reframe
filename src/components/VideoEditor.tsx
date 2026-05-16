@@ -70,15 +70,6 @@ export default function VideoEditor() {
   const isProcessing = status === "loading-engine" || status === "exporting";
 
   return (
-    <div
-      className="min-h-screen relative flex flex-col"
-      style={{ background: "var(--bg)" }}
-    >
-      <ExportOverlay
-  status={status}
-  progress={progress}
-  onCancel={cancelExport}
-/>
     <div className="min-h-screen relative flex flex-col" style={{ background: "var(--bg)" }}>
       <ExportOverlay status={status} progress={progress} onCancel={cancelExport} />
 
