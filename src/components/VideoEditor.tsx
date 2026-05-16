@@ -61,17 +61,15 @@ export default function VideoEditor() {
     updateRecipe,
     handleFileSelect,
     handleExport,
+    cancelExport,
     reset,
-    file, duration, recipe, status, progress,
-    result, error, updateRecipe,
-    handleFileSelect, handleExport, cancelExport, reset,
   } = useVideoEditor();
 
   const isProcessing = status === "loading-engine" || status === "exporting";
 
   return (
     <div className="min-h-screen relative flex flex-col" style={{ background: "var(--bg)" }}>
-      <ExportOverlay status={status} progress={progress} onCancel={cancelExport} />
+     <ExportOverlay status={status} progress={progress} />
 
       <div className="max-w-6xl mx-auto px-4 py-8 pb-6 flex-1 w-full">
         <header className="mb-10 flex items-end justify-between animate-fade-in">

@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { ExportStatus } from "@/lib/types";
 import LottiePlayer from "./LottiePlayer";
 import spinnerAnim from "@/lib/lottie/spinner.json";
@@ -11,29 +10,11 @@ interface Props {
   estimatedTime?: number;
 }
 
-export default function ExportOverlay({ status, progress, estimatedTime }: Props){
-  onCancel: () => void;
-}
 
-export default function ExportOverlay({ status, progress, onCancel }: Props) {
+export default function ExportOverlay({ status, progress, estimatedTime }: Props) {
   const visible = status === "loading-engine" || status === "exporting";
   const isLoading = status === "loading-engine";
 
-  useEffect(() => {
-    if (!visible) return;
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onCancel();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [visible, onCancel]);
 
   if (!visible) return null;
 
