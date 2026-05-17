@@ -114,7 +114,7 @@ export default function ExportOverlay({ status, progress, estimatedTime, onCance
                 ? "Setting up the video engine. This only happens once."
                 : "Processing your video locally."}
             </p>
-            <p className="text-xs font-heading font-semibold text-[var(--muted)] text-film-600 mt-2 uppercase tracking-wide">
+            <p className="text-xs font-heading font-semibold text-film-600 mt-2 uppercase tracking-wide">
               Do not close or refresh this tab
             </p>
           </div>
