@@ -216,7 +216,7 @@ export default function VideoEditor() {
           <p className="text-[11px] font-heading text-[var(--muted)] tracking-wide">2026 Reframe. Free, open source, no login required.</p>
           <p className="text-[10px] text-[var(--muted)]">All video processing happens locally in your browser using FFmpeg.wasm.</p>
           <a href="https://github.com/magic-peach/reframe" target="_blank" rel="noopener noreferrer" className="min-h-[44px] min-w-[44px] flex items-center gap-1.5 px-2 text-[11px] font-heading font-medium text-[var(--muted)] hover:text-film-600 transition-colors">
-            <Github size={13} />
+            
             Source on GitHub
           </a>
         </div>
