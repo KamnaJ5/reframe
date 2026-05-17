@@ -111,7 +111,7 @@ export default function ExportOverlay({ status, progress, estimatedTime, onCance
             </h2>
             <p className="text-sm text-[var(--muted)] mt-1">
               {isLoading
-                ? "Setting up the video engine. This only happens once."
+                ? "Downloading the video engine. This only happens once."
                 : "Processing your video locally."}
             </p>
             <p className="text-xs font-heading font-semibold text-film-600 mt-2 uppercase tracking-wide">
@@ -120,10 +120,9 @@ export default function ExportOverlay({ status, progress, estimatedTime, onCance
           </div>
           <span className="sr-only">
             {status === "loading-engine"
-              ? "Loading video engine..."
+              ? `Loading video engine: ${progress}%`
               : `Exporting: ${progress}%`}
           </span>
-          {status === "exporting" && (
             <div className="w-full space-y-2">
               <div className="h-1 w-full bg-film-100 rounded-full overflow-hidden">
                 <div
@@ -131,7 +130,7 @@ export default function ExportOverlay({ status, progress, estimatedTime, onCance
                   aria-valuenow={progress}
                   aria-valuemin={0}
                   aria-valuemax={100}
-                  aria-label="Export progress"
+                  aria-label={isLoading? "Engine download progress": "Export progress"}
                   className="h-full bg-film-600 rounded-full transition-all duration-300"
                   style={{ width: `${progress}%` }}
                 />
@@ -139,6 +138,7 @@ export default function ExportOverlay({ status, progress, estimatedTime, onCance
               <p className="text-xs font-heading font-semibold text-[var(--muted)]">
                 {progress}%
               </p>
+              {!isLoading && (
               <div className="flex flex-col items-center gap-3 mt-4">
                 <button
                   type="button"
@@ -151,8 +151,8 @@ export default function ExportOverlay({ status, progress, estimatedTime, onCance
                   Press Escape to cancel
                 </p>
               </div>
+              )}
             </div>
-          )}
         </div>
       </div>
       </FocusTrap>
