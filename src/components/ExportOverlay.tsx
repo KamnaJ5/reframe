@@ -10,7 +10,7 @@ interface Props {
   status: ExportStatus;
   progress: number;
   estimatedTime?: number;
-   onCancel?: () => void;
+  onCancel?: () => void;
 }
 
 export default function ExportOverlay({ status, progress, estimatedTime, onCancel }: Props) {
@@ -45,25 +45,6 @@ export default function ExportOverlay({ status, progress, estimatedTime, onCance
     };
   }, [visible, handleKeyDown]);
 
-        <div>
-          <h2 className="font-heading font-bold text-xl tracking-tight text-[var(--text)]">
-            {isLoading ? "Loading engine" : "Exporting"}
-          </h2>
-          <p className="text-sm text-[var(--muted)] mt-1">
-            {isLoading
-              ? "Setting up the video engine. This only happens once."
-              : "Processing your video locally."}
-          </p>
-
-{status === "exporting" && estimatedTime && (
-  <p className="text-sm text-[var(--muted)] mt-2">
-    About {estimatedTime}s remaining
-  </p>
-)}
-          <p className="text-xs font-heading font-semibold text-film-600 mt-2 uppercase tracking-wide">
-            Do not close or refresh this tab
-          </p>
-        </div>
   useEffect(() => {
     if (!visible && previousFocusRef.current) {
       previousFocusRef.current.focus();
@@ -115,6 +96,11 @@ export default function ExportOverlay({ status, progress, estimatedTime, onCance
                 ? "Downloading the video engine. This only happens once."
                 : "Processing your video locally."}
             </p>
+            {status === "exporting" && estimatedTime && (
+              <p className="text-sm text-[var(--muted)] mt-2">
+                About {estimatedTime}s remaining
+              </p>
+            )}
             <p className="text-xs font-heading font-semibold text-film-600 mt-2 uppercase tracking-wide">
               Do not close or refresh this tab
             </p>
@@ -124,22 +110,22 @@ export default function ExportOverlay({ status, progress, estimatedTime, onCance
               ? `Loading video engine: ${progress}%`
               : `Exporting: ${progress}%`}
           </span>
-            <div className="w-full space-y-2">
-              <div className="h-1 w-full bg-film-100 rounded-full overflow-hidden">
-                <div
-                  role="progressbar"
-                  aria-valuenow={progress}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                  aria-label={isLoading? "Engine download progress": "Export progress"}
-                  className="h-full bg-film-600 rounded-full transition-all duration-300"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-              <p className="text-xs font-heading font-semibold text-[var(--muted)]">
-                {progress}%
-              </p>
-              {!isLoading && (
+          <div className="w-full space-y-2">
+            <div className="h-1 w-full bg-film-100 rounded-full overflow-hidden">
+              <div
+                role="progressbar"
+                aria-valuenow={progress}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label={isLoading ? "Engine download progress" : "Export progress"}
+                className="h-full bg-film-600 rounded-full transition-all duration-300"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+            <p className="text-xs font-heading font-semibold text-[var(--muted)]">
+              {progress}%
+            </p>
+            {!isLoading && (
               <div className="flex flex-col items-center gap-3 mt-4">
                 <button
                   type="button"
@@ -152,8 +138,8 @@ export default function ExportOverlay({ status, progress, estimatedTime, onCance
                   Press Escape to cancel
                 </p>
               </div>
-              )}
-            </div>
+            )}
+          </div>
         </div>
       </div>
     </FocusTrap>
