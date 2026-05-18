@@ -10,16 +10,14 @@ interface Props {
   status: ExportStatus;
   progress: number;
   estimatedTime?: number;
+   onCancel?: () => void;
 }
 
-export default function ExportOverlay({ status, progress, estimatedTime }: Props){
-  onCancel?: () => void;
-}
-
-export default function ExportOverlay({ status, progress, onCancel }: Props) {
+export default function ExportOverlay({ status, progress, estimatedTime, onCancel }: Props) {
   const visible = status === "loading-engine" || status === "exporting";
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const focusAnchorRef = useRef<HTMLDivElement | null>(null);
+  const isLoading = status === "loading-engine";
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === "Escape") {
@@ -73,8 +71,6 @@ export default function ExportOverlay({ status, progress, onCancel }: Props) {
   }, [visible]);
 
   if (!visible) return null;
-
-  const isLoading = status === "loading-engine";
 
   return (
     <FocusTrap

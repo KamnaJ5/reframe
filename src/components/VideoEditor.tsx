@@ -67,9 +67,7 @@ export default function VideoEditor() {
     handleFileSelect,
     handleExport,
     reset,
-   file, duration, recipe, status, progress,
-    result, error, updateRecipe,
-    handleFileSelect, fileError, handleExport, cancelExport, reset, resetSettings,
+   fileError, cancelExport, resetSettings,
     videoRef,
     seekTo,
     overlayFile, setOverlayFile,
@@ -104,21 +102,13 @@ export default function VideoEditor() {
   }, [videoSrc]);
 
   return (
-    <div
-      className="min-h-screen relative flex flex-col"
-      style={{ background: "var(--bg)" }}
-    >
-      <ExportOverlay
-        status={status}
-        progress={progress}
-        estimatedTime={
-          progress > 0
-            ? Math.round(((Date.now() / progress) * (100 - progress)) / 1000)
-            : null
-        }
-      />
-    <div className="min-h-screen relative flex flex-col" style={{ background: "var(--bg)" }}>
-      <ExportOverlay status={status} progress={progress} onCancel={cancelExport} />
+   <div className="min-h-screen relative flex flex-col" style={{ background: "var(--bg)" }}>
+<ExportOverlay
+  status={status}
+  progress={progress}
+  onCancel={cancelExport}
+/>
+    
 
       <div aria-live="polite" aria-atomic="true" className="sr-only">
         {status === "exporting" && `Exporting video: ${progress}%`}
@@ -217,9 +207,6 @@ export default function VideoEditor() {
                   </Section>
                   <Section
                     icon={<SlidersHorizontal size={12} />}
-                    title="Export quality"
-                    delay={200}
-                  >
                     title="Adjustments"
                     delay={175}
                   >
