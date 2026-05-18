@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 
 import { EditRecipe } from "@/lib/types"
-import { SPEED_STEPS } from "@/lib/constants"
+import { SPEED_STEPS } from "@/lib/constants";
 import { Volume2, VolumeX, Gauge, AlertTriangle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
