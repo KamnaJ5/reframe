@@ -1,7 +1,7 @@
 "use client";
 
 
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo , useCallback} from "react";
 import { useVideoEditor } from "@/hooks/useVideoEditor";
 import FileUpload from "./FileUpload";
 import VideoPreview from "./VideoPreview";
@@ -78,6 +78,19 @@ export default function VideoEditor() {
   const [copied, setCopied] = useState(false);
   const downloadRef = useRef<HTMLDivElement>(null);
 
+  const [exportStartTime, setExportStartTime] = useState<number | null>(null);
+
+const estimatedTime = useMemo(() => {
+  if (!exportStartTime || progress <= 0) return null;
+  const elapsedMs = Date.now() - exportStartTime;
+  return Math.round((elapsedMs / progress) * (100 - progress) / 1000);
+}, [exportStartTime, progress]);
+
+const handleExportWithTimer = useCallback(() => {
+  setExportStartTime(Date.now());
+  handleExport();
+}, [handleExport]);
+
   useEffect(() => {
     if (status === "done" && downloadRef.current) {
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -103,11 +116,12 @@ export default function VideoEditor() {
 
   return (
    <div className="min-h-screen relative flex flex-col" style={{ background: "var(--bg)" }}>
-<ExportOverlay
-  status={status}
-  progress={progress}
-  onCancel={cancelExport}
-/>
+    <ExportOverlay
+      status={status}
+      progress={progress}
+      onCancel={cancelExport}
+      estimatedTime={estimatedTime ?? undefined}
+    />
     
 
       <div aria-live="polite" aria-atomic="true" className="sr-only">
@@ -333,7 +347,7 @@ export default function VideoEditor() {
                 {!error.includes("Validation Failed") && (
                   <button
                     type="button"
-                    onClick={handleExport}
+                    onClick={handleExportWithTimer}
                     className="px-3 py-1.5 bg-[var(--error-bg)] border border-[var(--error-border)] rounded-lg text-sm font-semibold hover:bg-[var(--error-hover)] hover:border-[var(--error)] text-[var(--text)] transition-colors shrink-0 whitespace-nowrap"
                   >
                     Retry Export
@@ -380,7 +394,7 @@ export default function VideoEditor() {
 
             <button
               type="button"
-              onClick={handleExport}
+              onClick={handleExportWithTimer}
               disabled={!file || isProcessing}
               aria-label='Export video'
               aria-disabled={!file || isProcessing ? "true" : undefined}
